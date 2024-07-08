@@ -2,10 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { 
-  SignInButton, 
-  SignOutButton, 
-  SignedIn, 
-  SignedOut, 
   useOrganization,
   useUser
 } from '@clerk/nextjs';
