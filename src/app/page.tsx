@@ -4,7 +4,7 @@ import {
   useOrganization,
   useUser
 } from '@clerk/nextjs';
-import { useMutation, useQuery } from 'convex/react';
+import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { useState } from 'react';
 import { UploadButton } from './upload-file';
