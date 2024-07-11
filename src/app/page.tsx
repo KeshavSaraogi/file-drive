@@ -8,7 +8,7 @@ import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { useState } from 'react';
 import { UploadButton } from './upload-file';
-import { FileCard } from './file-card';
+import { FileCard } from './dashboard/_components/file-card';
 import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
 
