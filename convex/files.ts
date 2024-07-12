@@ -266,4 +266,5 @@ async function hasAccessToFile(
     return null;
   }
 
-  return { user: hasAccess.user, file };
+  return { user: hasAccess.user, file }
+}
