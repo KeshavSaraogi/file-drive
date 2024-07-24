@@ -25,8 +25,10 @@ export async function hasAccessToOrg(
   orgId: string
 ) {
   const identity = await ctx.auth.getUserIdentity();
+  console.log("Identity:", identity);
 
   if (!identity) {
+    console.error("No identity found");
     return null;
   }
 
@@ -36,8 +38,11 @@ export async function hasAccessToOrg(
       q.eq("tokenIdentifier", identity.tokenIdentifier)
     )
     .first();
+  
+  console.log("User found:", user);
 
   if (!user) {
+    console.error("No user found with the given token identifier");
     return null;
   }
 
@@ -45,12 +50,16 @@ export async function hasAccessToOrg(
     user.orgIds.some((item) => item.orgId === orgId) ||
     user.tokenIdentifier.includes(orgId);
 
+  console.log("User has access:", hasAccess);
+
   if (!hasAccess) {
+    console.error("User does not have access to the org");
     return null;
   }
 
   return { user };
 }
+
 
 export const createFile = mutation({
   args: {
@@ -60,19 +69,25 @@ export const createFile = mutation({
     type: fileTypes,
   },
   async handler(ctx, args) {
-    const hasAccess = await hasAccessToOrg(ctx, args.orgId);
+    console.log("createFile called with args:", args);
+    
+    const accessInfo = await hasAccessToOrg(ctx, args.orgId);
 
-    if (!hasAccess) {
-      throw new ConvexError("you do not have access to this org");
+    if (!accessInfo) {
+      throw new ConvexError("You do not have access to this org");
     }
+
+    console.log("User has access:", accessInfo);
 
     await ctx.db.insert("files", {
       name: args.name,
       orgId: args.orgId,
       fileId: args.fileId,
       type: args.type,
-      userId: hasAccess.user._id,
+      userId: accessInfo.user._id,
     });
+
+    console.log("File successfully created");
   },
 });
 

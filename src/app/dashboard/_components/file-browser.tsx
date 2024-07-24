@@ -18,8 +18,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Doc } from "../../../../convex/_generated/dataModel";
+import { Doc, Id } from "../../../../convex/_generated/dataModel";
 import { Label } from "@/components/ui/label";
+
+interface File {
+  isFavorited: boolean;
+  url: string | null;
+  _id: Id<"files">;
+  _creationTime: number;
+  shouldDelete?: boolean;
+  type: "image" | "csv" | "pdf";
+  name: string;
+  orgId: string;
+  fileId: Id<"_storage">;
+  userId: Id<"users">;
+}
 
 function Placeholder() {
   return (
@@ -74,7 +87,7 @@ export function FileBrowser({
   );
   const isLoading = files === undefined;
 
-  const modifiedFiles =
+  const modifiedFiles: File[] =
     files?.map((file) => ({
       ...file,
       isFavorited: (favorites ?? []).some(
@@ -140,7 +153,7 @@ export function FileBrowser({
           </div>
         </TabsContent>
         <TabsContent value="table">
-          <DataTable columns={columns} data={modifiedFiles} />
+          {/* <DataTable columns={columns} data={modifiedFiles} /> */}
         </TabsContent>
       </Tabs>
 
