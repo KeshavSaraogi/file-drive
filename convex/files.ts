@@ -9,6 +9,8 @@ import {
 import { getUser } from "./users";
 import { fileTypes } from "./schema";
 import { Doc, Id } from "./_generated/dataModel";
+import getClerkURL  from "./helper"
+
 
 export const generateUploadUrl = mutation(async (ctx) => {
   const identity = await ctx.auth.getUserIdentity();
@@ -70,6 +72,8 @@ export const createFile = mutation({
   },
   async handler(ctx, args) {
     console.log("createFile called with args:", args);
+    const hostname = getClerkURL();
+    console.log(hostname);
     
     const accessInfo = await hasAccessToOrg(ctx, args.orgId);
 
