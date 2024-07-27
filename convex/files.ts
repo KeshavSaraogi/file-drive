@@ -45,6 +45,7 @@ export async function hasAccessToOrg(
 
   if (!user) {
     console.error("No user found with the given token identifier");
+    console.log("Token Identifier: ", identity.tokenIdentifier);
     return null;
   }
 
