@@ -42,6 +42,7 @@ export async function hasAccessToOrg(
     .first();
   
   console.log("User found:", user);
+  console.log("USER: ", user?.tokenIdentifier);
 
   if (!user) {
     console.error("No user found with the given token identifier");
